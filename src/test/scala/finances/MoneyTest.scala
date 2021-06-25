@@ -12,7 +12,7 @@ class MoneyTest extends FunSuite with Matchers {
   }
 
   test("testCurrency") {
-    Money.dollar(1).currency shouldBe "USD"
-    Money.franc(1).currency shouldBe "CHF"
+    Money.dollar(1).getCurrency shouldBe "USD"
+    Money.franc(1).getCurrency shouldBe "CHF"
   }
 }

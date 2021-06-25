@@ -1,11 +1,7 @@
 package finances
 
-class Franc(val amount: Int) extends Money {
-  private val cur: String = "CHF"
-
+class Franc(val amount: Int, val currency: String) extends Money(amount, currency) {
   def times(multiplier: Int): Money = {
-    new Franc(amount * multiplier)
+    Money.franc(amount * multiplier)
   }
-
-  def currency: String = cur
 }
