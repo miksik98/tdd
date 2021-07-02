@@ -13,8 +13,10 @@ class Money(val amount: Int, val currency: String) extends Expression {
   def getCurrency: String = currency
 
   def plus(addend: Money): Expression = {
-    new Money(amount + addend.amount, currency)
+    Sum(this, addend)
   }
+
+  def reduce(to: String): Money = this
 
   override def toString: String = {
     s"""$amount $currency"""
