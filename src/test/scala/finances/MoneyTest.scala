@@ -13,4 +13,12 @@ class MoneyTest extends FunSuite with Matchers {
     Money.dollar(1).getCurrency shouldBe "USD"
     Money.franc(1).getCurrency shouldBe "CHF"
   }
+
+  test("testSimpleAddition") {
+    val five = Money.dollar(5)
+    val sum = five.plus(five)
+    val bank = new Bank()
+    val reduced = bank.reduce(sum, "USD")
+    reduced shouldBe Money.dollar(10)
+  }
 }

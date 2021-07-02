@@ -1,6 +1,6 @@
 package finances
 
-class Money(val amount: Int, val currency: String) {
+class Money(val amount: Int, val currency: String) extends Expression {
   override def equals(obj: Any): Boolean = {
     val money: Money = obj.asInstanceOf[Money]
     amount == money.amount && getCurrency.equals(money.getCurrency)
@@ -11,6 +11,10 @@ class Money(val amount: Int, val currency: String) {
   }
 
   def getCurrency: String = currency
+
+  def plus(addend: Money): Expression = {
+    new Money(amount + addend.amount, currency)
+  }
 
   override def toString: String = {
     s"""$amount $currency"""
