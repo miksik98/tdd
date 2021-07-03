@@ -16,7 +16,10 @@ class Money(val amount: Int, val currency: String) extends Expression {
     Sum(this, addend)
   }
 
-  def reduce(to: String): Money = this
+  def reduce(bank: Bank, to: String): Money = {
+    val rate = bank.rate(currency, to)
+    new Money(amount / rate, to)
+  }
 
   override def toString: String = {
     s"""$amount $currency"""
