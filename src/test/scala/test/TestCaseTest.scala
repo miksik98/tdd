@@ -25,6 +25,13 @@ case class TestCaseTest(name: String) extends TestCase(name) {
     assert("1 run, 1 failed" == result.summary)
   }
 
+  def testFailedResultFormatting(): Unit = {
+    val result = TestResult()
+    result.testStarted
+    result.testFailed
+    assert("1 run, 1 failed" == result.summary)
+  }
+
   override def setUp(): Unit = {}
 
   override def tearDown(): Unit = {}
@@ -34,6 +41,7 @@ object TestCaseTest {
   def main(args: Array[String]): Unit = {
     TestCaseTest("testTemplateMethod").run()
     TestCaseTest("testResult").run()
+    TestCaseTest("testFailedResultFormatting").run()
     TestCaseTest("testFailedResult").run()
   }
 }
