@@ -7,6 +7,10 @@ case class WasRun(name: String) extends TestCase(name) {
     log += "testMethod "
   }
 
+  def testBrokenMethod(): Unit = {
+    throw new RuntimeException("broken method")
+  }
+
   override def setUp(): Unit = {
     log = "setUp "
   }
