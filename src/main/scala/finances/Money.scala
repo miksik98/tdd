@@ -6,17 +6,17 @@ class Money(val amount: Int, val currency: String) extends Expression {
     amount == money.amount && getCurrency.equals(money.getCurrency)
   }
 
-  def times(multiplier: Int): Money = {
+  def times(multiplier: Int): Expression = {
     new Money(amount * multiplier, currency)
   }
 
   def getCurrency: String = currency
 
-  def plus(addend: Money): Expression = {
+  override def plus(addend: Expression): Expression = {
     Sum(this, addend)
   }
 
-  def reduce(bank: Bank, to: String): Money = {
+  override def reduce(bank: Bank, to: String): Money = {
     val rate = bank.rate(currency, to)
     new Money(amount / rate, to)
   }

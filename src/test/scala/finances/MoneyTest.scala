@@ -53,4 +53,13 @@ class MoneyTest extends FunSuite with Matchers {
   test("testIdentityRate") {
     new Bank().rate("USD", "USD") shouldBe 1
   }
+
+  test("testMixedAddition") {
+    val fiveBucks: Expression = Money.dollar(5)
+    val tenFrancs: Expression = Money.franc(10)
+    val bank = new Bank()
+    bank.addRate("CHF", "USD", 2)
+    val result: Money = bank.reduce(fiveBucks.plus(tenFrancs), "USD")
+    result shouldBe Money.dollar(10)
+  }
 }
