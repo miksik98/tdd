@@ -7,23 +7,19 @@ case class TestCaseTest(name: String) extends TestCase(name) {
 
   private def setTest(t: WasRun): Unit = test = Some(t)
 
-  def testRunning(): Unit = {
-    getTest.run()
-    assert(getTest.wasRun)
-  }
-
-  def testSetUp(): Unit = {
-    getTest.run()
-    assert(getTest.wasSetUp)
-  }
-
-  override def setUp(): Unit = {
+  def testTemplateMethod(): Unit = {
     setTest(WasRun("testMethod"))
+    getTest.run()
+    assert(getTest.log == "setUp testMethod tearDown ")
   }
+
+  override def setUp(): Unit = {}
+
+  override def tearDown(): Unit = {}
 }
 
 object TestCaseTest {
   def main(args: Array[String]): Unit = {
-    TestCaseTest("testRunning").run()
+    TestCaseTest("testTemplateMethod").run()
   }
 }

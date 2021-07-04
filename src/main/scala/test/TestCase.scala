@@ -5,7 +5,10 @@ abstract class TestCase(name: String) {
     setUp()
     val method = getClass.getMethod(name)
     method.invoke(this)
+    tearDown()
   }
 
   def setUp(): Unit
+
+  def tearDown(): Unit
 }

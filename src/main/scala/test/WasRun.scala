@@ -1,13 +1,17 @@
 package test
 
 case class WasRun(name: String) extends TestCase(name) {
-  var wasRun: Boolean = false
-  var wasSetUp: Boolean = false
+  var log: String = ""
 
-  def testMethod(): Unit = {}
+  def testMethod(): Unit = {
+    log += "testMethod "
+  }
 
   override def setUp(): Unit = {
-    wasSetUp = true
-    wasRun = true
+    log = "setUp "
+  }
+
+  override def tearDown(): Unit = {
+    log += "tearDown "
   }
 }
