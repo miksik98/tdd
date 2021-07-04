@@ -6,7 +6,7 @@ class Money(val amount: Int, val currency: String) extends Expression {
     amount == money.amount && getCurrency.equals(money.getCurrency)
   }
 
-  def times(multiplier: Int): Expression = {
+  override def times(multiplier: Int): Expression = {
     new Money(amount * multiplier, currency)
   }
 

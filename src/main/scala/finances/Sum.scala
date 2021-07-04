@@ -6,5 +6,11 @@ case class Sum(augend: Expression, addend: Expression) extends Expression {
     new Money(amount, to)
   }
 
-  override def plus(addend: Expression): Expression = null
+  override def plus(addend: Expression): Expression = {
+    Sum(this, addend)
+  }
+
+  override def times(multiplier: Int): Expression = {
+    Sum(augend.times(multiplier), addend.times(multiplier))
+  }
 }

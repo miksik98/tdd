@@ -62,4 +62,24 @@ class MoneyTest extends FunSuite with Matchers {
     val result: Money = bank.reduce(fiveBucks.plus(tenFrancs), "USD")
     result shouldBe Money.dollar(10)
   }
+
+  test("testSumPlusMoney") {
+    val fiveBucks: Expression = Money.dollar(5)
+    val tenFrancs: Expression = Money.franc(10)
+    val bank = new Bank()
+    bank.addRate("CHF", "USD", 2)
+    val sum: Expression = Sum(fiveBucks, tenFrancs).plus(fiveBucks)
+    val result: Money = bank.reduce(sum, "USD")
+    result shouldBe Money.dollar(15)
+  }
+
+  test("testSumTimes") {
+    val fiveBucks: Expression = Money.dollar(5)
+    val tenFrancs: Expression = Money.franc(10)
+    val bank = new Bank()
+    bank.addRate("CHF", "USD", 2)
+    val sum: Expression = Sum(fiveBucks, tenFrancs).times(2)
+    val result: Money = bank.reduce(sum, "USD")
+    result shouldBe Money.dollar(20)
+  }
 }
