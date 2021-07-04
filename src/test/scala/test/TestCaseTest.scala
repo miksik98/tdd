@@ -1,27 +1,27 @@
 package test
 
 case class TestCaseTest(name: String) extends TestCase(name) {
-  private var test: Option[WasRun] = None
+  private var result: Option[TestResult] = None
 
-  private def getTest: WasRun = test.get
+  private def getTestResult: TestResult = result.get
 
-  private def setTest(t: WasRun): Unit = test = Some(t)
+  private def setTestResult(tr: TestResult): Unit = result = Some(tr)
 
   def testTemplateMethod(): Unit = {
-    setTest(WasRun("testMethod"))
-    getTest.run()
-    assert(getTest.log == "setUp testMethod tearDown ")
+    val test = WasRun("testMethod")
+    test.run(getTestResult)
+    assert(test.log == "setUp testMethod tearDown ")
   }
 
   def testResult(): Unit = {
     val test = WasRun("testMethod")
-    val result = test.run()
+    val result = test.run(getTestResult)
     assert("1 run, 0 failed" == result.summary)
   }
 
   def testFailedResult(): Unit = {
     val test = WasRun("testBrokenMethod")
-    val result = test.run()
+    val result = test.run(getTestResult)
     assert("1 run, 1 failed" == result.summary)
   }
 
@@ -32,16 +32,31 @@ case class TestCaseTest(name: String) extends TestCase(name) {
     assert("1 run, 1 failed" == result.summary)
   }
 
-  override def setUp(): Unit = {}
+  def testSuite(): Unit = {
+    val suite = TestSuite()
+    suite.add(WasRun("testMethod"))
+    suite.add(WasRun("testBrokenMethod"))
+    suite.run(getTestResult)
+    assert("2 run, 1 failed" == getTestResult.summary)
+  }
+
+  override def setUp(): Unit = {
+    setTestResult(TestResult())
+  }
 
   override def tearDown(): Unit = {}
 }
 
 object TestCaseTest {
   def main(args: Array[String]): Unit = {
-    TestCaseTest("testTemplateMethod").run()
-    TestCaseTest("testResult").run()
-    TestCaseTest("testFailedResultFormatting").run()
-    TestCaseTest("testFailedResult").run()
+    val suite = TestSuite()
+    suite.add(TestCaseTest("testTemplateMethod"))
+    suite.add(TestCaseTest("testResult"))
+    suite.add(TestCaseTest("testFailedResultFormatting"))
+    suite.add(TestCaseTest("testFailedResult"))
+    suite.add(TestCaseTest("testSuite"))
+    val result = TestResult()
+    suite.run(result)
+    println(result.summary)
   }
 }

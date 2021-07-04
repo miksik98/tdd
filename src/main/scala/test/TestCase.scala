@@ -1,8 +1,7 @@
 package test
 
 abstract class TestCase(name: String) {
-  final def run(): TestResult = {
-    val result = TestResult()
+  final def run(result: TestResult = TestResult()): TestResult = {
     result.testStarted
     try {
       setUp()
